@@ -1,15 +1,17 @@
 import { PropsWithChildren } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
+import { useTheme } from '../constants/theme';
 
 export const Screen = ({ children, scroll = true }: PropsWithChildren<{ scroll?: boolean }>) => {
-  if (scroll) return <ScrollView contentContainerStyle={styles.container}>{children}</ScrollView>;
-  return <View style={styles.container}>{children}</View>;
-};
+  const { colors } = useTheme();
 
-const styles = StyleSheet.create({
-  container: {
+  const containerStyle = {
     padding: 16,
     gap: 12,
     flexGrow: 1,
-  },
-});
+    backgroundColor: colors.bg,
+  } as const;
+
+  if (scroll) return <ScrollView contentContainerStyle={containerStyle}>{children}</ScrollView>;
+  return <View style={containerStyle}>{children}</View>;
+};

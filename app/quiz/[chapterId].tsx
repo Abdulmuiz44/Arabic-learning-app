@@ -1,12 +1,14 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { Text, View } from 'react-native';
-import { Screen } from '../../src/components/Screen';
 import { PrimaryButton } from '../../src/components/PrimaryButton';
+import { Screen } from '../../src/components/Screen';
+import { useTheme } from '../../src/constants/theme';
 import { setQuizBestScore, updateStreakForAction } from '../../src/db/repositories';
 import { getQuestionsForQuiz, getQuizForChapter } from '../../src/features/quiz/selectors';
 
 export default function QuizScreen() {
+  const { colors } = useTheme();
   const { chapterId } = useLocalSearchParams<{ chapterId: string }>();
   const quiz = getQuizForChapter(chapterId);
   const questions = useMemo(() => (quiz ? getQuestionsForQuiz(quiz.id) : []), [quiz]);
@@ -14,7 +16,7 @@ export default function QuizScreen() {
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<string | null>(null);
 
-  if (!quiz) return <Screen><Text>No quiz available.</Text></Screen>;
+  if (!quiz) return <Screen><Text style={{ color: colors.text }}>No quiz available.</Text></Screen>;
 
   const question = questions[index];
   const answer = async (option: 'A' | 'B' | 'C' | 'D') => {
@@ -37,10 +39,10 @@ export default function QuizScreen() {
 
   return (
     <Screen>
-      <Text style={{ fontSize: 24, fontWeight: '700' }}>{quiz.title}</Text>
-      <Text>Question {index + 1} of {questions.length}</Text>
-      <View style={{ backgroundColor: '#fff', padding: 12, borderRadius: 8, gap: 8 }}>
-        <Text>{question.prompt}</Text>
+      <Text style={{ fontSize: 24, fontWeight: '700', color: colors.text }}>{quiz.title}</Text>
+      <Text style={{ color: colors.muted }}>Question {index + 1} of {questions.length}</Text>
+      <View style={{ backgroundColor: colors.card, borderColor: colors.border, borderWidth: 1, padding: 12, borderRadius: 8, gap: 8 }}>
+        <Text style={{ color: colors.text }}>{question.prompt}</Text>
         {(['A', 'B', 'C', 'D'] as const).map((opt) => (
           <PrimaryButton
             key={opt}
@@ -49,7 +51,7 @@ export default function QuizScreen() {
           />
         ))}
       </View>
-      {feedback ? <Text>{feedback}</Text> : null}
+      {feedback ? <Text style={{ color: colors.text }}>{feedback}</Text> : null}
       <PrimaryButton label={index === questions.length - 1 ? 'Finish quiz' : 'Next question'} onPress={next} />
     </Screen>
   );

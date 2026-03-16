@@ -1,16 +1,15 @@
 import { PropsWithChildren } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import { useTheme } from '../constants/theme';
 
-export const SectionCard = ({ title, subtitle, children }: PropsWithChildren<{ title: string; subtitle?: string }>) => (
-  <View style={styles.card}>
-    <Text style={styles.title}>{title}</Text>
-    {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
-    {children}
-  </View>
-);
+export const SectionCard = ({ title, subtitle, children }: PropsWithChildren<{ title: string; subtitle?: string }>) => {
+  const { colors } = useTheme();
 
-const styles = StyleSheet.create({
-  card: { backgroundColor: '#fff', borderRadius: 14, padding: 14, gap: 8 },
-  title: { fontSize: 18, fontWeight: '700' },
-  subtitle: { color: '#475569' },
-});
+  return (
+    <View style={{ backgroundColor: colors.card, borderColor: colors.border, borderWidth: 1, borderRadius: 14, padding: 14, gap: 8 }}>
+      <Text style={{ fontSize: 18, fontWeight: '700', color: colors.text }}>{title}</Text>
+      {subtitle ? <Text style={{ color: colors.muted }}>{subtitle}</Text> : null}
+      {children}
+    </View>
+  );
+};

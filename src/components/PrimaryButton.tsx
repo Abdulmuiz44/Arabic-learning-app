@@ -1,12 +1,12 @@
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { Pressable, Text } from 'react-native';
+import { useTheme } from '../constants/theme';
 
-export const PrimaryButton = ({ label, onPress }: { label: string; onPress: () => void }) => (
-  <Pressable style={styles.button} onPress={onPress}>
-    <Text style={styles.text}>{label}</Text>
-  </Pressable>
-);
+export const PrimaryButton = ({ label, onPress }: { label: string; onPress: () => void }) => {
+  const { colors } = useTheme();
 
-const styles = StyleSheet.create({
-  button: { backgroundColor: '#2563EB', borderRadius: 10, paddingHorizontal: 14, paddingVertical: 12, alignItems: 'center' },
-  text: { color: '#fff', fontWeight: '700' },
-});
+  return (
+    <Pressable style={{ backgroundColor: colors.primary, borderRadius: 10, paddingHorizontal: 14, paddingVertical: 12, alignItems: 'center' }} onPress={onPress}>
+      <Text style={{ color: colors.onPrimary, fontWeight: '700' }}>{label}</Text>
+    </Pressable>
+  );
+};
