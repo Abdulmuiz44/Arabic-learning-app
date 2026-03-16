@@ -1,0 +1,242 @@
+[
+  {
+    "id": "f-c1-1",
+    "chapterId": "c1",
+    "arabic": "كِتَاب",
+    "transliteration": "kitāb",
+    "meaning": "book",
+    "example": "هَذَا كِتَابٌ مُفِيدٌ."
+  },
+  {
+    "id": "f-c1-2",
+    "chapterId": "c1",
+    "arabic": "بَيْت",
+    "transliteration": "bayt",
+    "meaning": "house",
+    "example": "بَيْتِي قَرِيبٌ مِنَ الْمَسْجِدِ."
+  },
+  {
+    "id": "f-c1-3",
+    "chapterId": "c1",
+    "arabic": "طَالِب",
+    "transliteration": "ṭālib",
+    "meaning": "student",
+    "example": "الطَّالِبُ يَقْرَأُ الدَّرْسَ."
+  },
+  {
+    "id": "f-c1-4",
+    "chapterId": "c1",
+    "arabic": "مُعَلِّم",
+    "transliteration": "muʿallim",
+    "meaning": "teacher",
+    "example": "الْمُعَلِّمُ يَشْرَحُ بِوُضُوحٍ."
+  },
+  {
+    "id": "f-c1-5",
+    "chapterId": "c1",
+    "arabic": "صَدِيق",
+    "transliteration": "ṣadīq",
+    "meaning": "friend",
+    "example": "هُوَ صَدِيقِي فِي الْمَدْرَسَةِ."
+  },
+  {
+    "id": "f-c1-6",
+    "chapterId": "c1",
+    "arabic": "يَكْتُب",
+    "transliteration": "yaktubu",
+    "meaning": "he writes",
+    "example": "يَكْتُبُ الوَلَدُ وَاجِبَهُ."
+  },
+  {
+    "id": "f-c2-1",
+    "chapterId": "c2",
+    "arabic": "كِتَاب",
+    "transliteration": "kitāb",
+    "meaning": "book",
+    "example": "هَذَا كِتَابٌ مُفِيدٌ."
+  },
+  {
+    "id": "f-c2-2",
+    "chapterId": "c2",
+    "arabic": "بَيْت",
+    "transliteration": "bayt",
+    "meaning": "house",
+    "example": "بَيْتِي قَرِيبٌ مِنَ الْمَسْجِدِ."
+  },
+  {
+    "id": "f-c2-3",
+    "chapterId": "c2",
+    "arabic": "طَالِب",
+    "transliteration": "ṭālib",
+    "meaning": "student",
+    "example": "الطَّالِبُ يَقْرَأُ الدَّرْسَ."
+  },
+  {
+    "id": "f-c2-4",
+    "chapterId": "c2",
+    "arabic": "مُعَلِّم",
+    "transliteration": "muʿallim",
+    "meaning": "teacher",
+    "example": "الْمُعَلِّمُ يَشْرَحُ بِوُضُوحٍ."
+  },
+  {
+    "id": "f-c2-5",
+    "chapterId": "c2",
+    "arabic": "صَدِيق",
+    "transliteration": "ṣadīq",
+    "meaning": "friend",
+    "example": "هُوَ صَدِيقِي فِي الْمَدْرَسَةِ."
+  },
+  {
+    "id": "f-c2-6",
+    "chapterId": "c2",
+    "arabic": "يَكْتُب",
+    "transliteration": "yaktubu",
+    "meaning": "he writes",
+    "example": "يَكْتُبُ الوَلَدُ وَاجِبَهُ."
+  },
+  {
+    "id": "f-c3-1",
+    "chapterId": "c3",
+    "arabic": "كِتَاب",
+    "transliteration": "kitāb",
+    "meaning": "book",
+    "example": "هَذَا كِتَابٌ مُفِيدٌ."
+  },
+  {
+    "id": "f-c3-2",
+    "chapterId": "c3",
+    "arabic": "بَيْت",
+    "transliteration": "bayt",
+    "meaning": "house",
+    "example": "بَيْتِي قَرِيبٌ مِنَ الْمَسْجِدِ."
+  },
+  {
+    "id": "f-c3-3",
+    "chapterId": "c3",
+    "arabic": "طَالِب",
+    "transliteration": "ṭālib",
+    "meaning": "student",
+    "example": "الطَّالِبُ يَقْرَأُ الدَّرْسَ."
+  },
+  {
+    "id": "f-c3-4",
+    "chapterId": "c3",
+    "arabic": "مُعَلِّم",
+    "transliteration": "muʿallim",
+    "meaning": "teacher",
+    "example": "الْمُعَلِّمُ يَشْرَحُ بِوُضُوحٍ."
+  },
+  {
+    "id": "f-c3-5",
+    "chapterId": "c3",
+    "arabic": "صَدِيق",
+    "transliteration": "ṣadīq",
+    "meaning": "friend",
+    "example": "هُوَ صَدِيقِي فِي الْمَدْرَسَةِ."
+  },
+  {
+    "id": "f-c3-6",
+    "chapterId": "c3",
+    "arabic": "يَكْتُب",
+    "transliteration": "yaktubu",
+    "meaning": "he writes",
+    "example": "يَكْتُبُ الوَلَدُ وَاجِبَهُ."
+  },
+  {
+    "id": "f-c4-1",
+    "chapterId": "c4",
+    "arabic": "كِتَاب",
+    "transliteration": "kitāb",
+    "meaning": "book",
+    "example": "هَذَا كِتَابٌ مُفِيدٌ."
+  },
+  {
+    "id": "f-c4-2",
+    "chapterId": "c4",
+    "arabic": "بَيْت",
+    "transliteration": "bayt",
+    "meaning": "house",
+    "example": "بَيْتِي قَرِيبٌ مِنَ الْمَسْجِدِ."
+  },
+  {
+    "id": "f-c4-3",
+    "chapterId": "c4",
+    "arabic": "طَالِب",
+    "transliteration": "ṭālib",
+    "meaning": "student",
+    "example": "الطَّالِبُ يَقْرَأُ الدَّرْسَ."
+  },
+  {
+    "id": "f-c4-4",
+    "chapterId": "c4",
+    "arabic": "مُعَلِّم",
+    "transliteration": "muʿallim",
+    "meaning": "teacher",
+    "example": "الْمُعَلِّمُ يَشْرَحُ بِوُضُوحٍ."
+  },
+  {
+    "id": "f-c4-5",
+    "chapterId": "c4",
+    "arabic": "صَدِيق",
+    "transliteration": "ṣadīq",
+    "meaning": "friend",
+    "example": "هُوَ صَدِيقِي فِي الْمَدْرَسَةِ."
+  },
+  {
+    "id": "f-c4-6",
+    "chapterId": "c4",
+    "arabic": "يَكْتُب",
+    "transliteration": "yaktubu",
+    "meaning": "he writes",
+    "example": "يَكْتُبُ الوَلَدُ وَاجِبَهُ."
+  },
+  {
+    "id": "f-c5-1",
+    "chapterId": "c5",
+    "arabic": "كِتَاب",
+    "transliteration": "kitāb",
+    "meaning": "book",
+    "example": "هَذَا كِتَابٌ مُفِيدٌ."
+  },
+  {
+    "id": "f-c5-2",
+    "chapterId": "c5",
+    "arabic": "بَيْت",
+    "transliteration": "bayt",
+    "meaning": "house",
+    "example": "بَيْتِي قَرِيبٌ مِنَ الْمَسْجِدِ."
+  },
+  {
+    "id": "f-c5-3",
+    "chapterId": "c5",
+    "arabic": "طَالِب",
+    "transliteration": "ṭālib",
+    "meaning": "student",
+    "example": "الطَّالِبُ يَقْرَأُ الدَّرْسَ."
+  },
+  {
+    "id": "f-c5-4",
+    "chapterId": "c5",
+    "arabic": "مُعَلِّم",
+    "transliteration": "muʿallim",
+    "meaning": "teacher",
+    "example": "الْمُعَلِّمُ يَشْرَحُ بِوُضُوحٍ."
+  },
+  {
+    "id": "f-c5-5",
+    "chapterId": "c5",
+    "arabic": "صَدِيق",
+    "transliteration": "ṣadīq",
+    "meaning": "friend",
+    "example": "هُوَ صَدِيقِي فِي الْمَدْرَسَةِ."
+  },
+  {
+    "id": "f-c5-6",
+    "chapterId": "c5",
+    "arabic": "يَكْتُب",
+    "transliteration": "yaktubu",
+    "meaning": "he writes",
+    "example": "يَكْتُبُ الوَلَدُ وَاجِبَهُ."
+  }
+]

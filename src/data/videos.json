@@ -1,0 +1,44 @@
+[
+  {
+    "id": "v-c1-1",
+    "chapterId": "c1",
+    "title": "Arabic Letters and Sounds Video 1",
+    "youtubeUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  },
+  {
+    "id": "v-c1-2",
+    "chapterId": "c1",
+    "title": "Arabic Letters and Sounds Video 2",
+    "youtubeUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  },
+  {
+    "id": "v-c2-1",
+    "chapterId": "c2",
+    "title": "Short Vowels and Basic Words Video 1",
+    "youtubeUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  },
+  {
+    "id": "v-c3-1",
+    "chapterId": "c3",
+    "title": "Useful Greetings Video 1",
+    "youtubeUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  },
+  {
+    "id": "v-c4-1",
+    "chapterId": "c4",
+    "title": "Nominal Sentences Video 1",
+    "youtubeUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  },
+  {
+    "id": "v-c4-2",
+    "chapterId": "c4",
+    "title": "Nominal Sentences Video 2",
+    "youtubeUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  },
+  {
+    "id": "v-c5-1",
+    "chapterId": "c5",
+    "title": "Verb Basics in Daily Context Video 1",
+    "youtubeUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+  }
+]

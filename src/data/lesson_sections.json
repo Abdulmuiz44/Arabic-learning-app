@@ -1,0 +1,107 @@
+[
+  {
+    "id": "ls-c1-1",
+    "chapterId": "c1",
+    "heading": "Concept",
+    "body": "This lesson introduces arabic letters and sounds with clear examples for beginners.",
+    "orderIndex": 1
+  },
+  {
+    "id": "ls-c1-2",
+    "chapterId": "c1",
+    "heading": "Pattern",
+    "body": "Study the core pattern in chapter 1 and repeat aloud to improve retention.",
+    "orderIndex": 2
+  },
+  {
+    "id": "ls-c1-3",
+    "chapterId": "c1",
+    "heading": "Practice",
+    "body": "Read each sample twice, then write one new sentence using the chapter pattern.",
+    "orderIndex": 3
+  },
+  {
+    "id": "ls-c2-1",
+    "chapterId": "c2",
+    "heading": "Concept",
+    "body": "This lesson introduces short vowels and basic words with clear examples for beginners.",
+    "orderIndex": 1
+  },
+  {
+    "id": "ls-c2-2",
+    "chapterId": "c2",
+    "heading": "Pattern",
+    "body": "Study the core pattern in chapter 2 and repeat aloud to improve retention.",
+    "orderIndex": 2
+  },
+  {
+    "id": "ls-c2-3",
+    "chapterId": "c2",
+    "heading": "Practice",
+    "body": "Read each sample twice, then write one new sentence using the chapter pattern.",
+    "orderIndex": 3
+  },
+  {
+    "id": "ls-c3-1",
+    "chapterId": "c3",
+    "heading": "Concept",
+    "body": "This lesson introduces useful greetings with clear examples for beginners.",
+    "orderIndex": 1
+  },
+  {
+    "id": "ls-c3-2",
+    "chapterId": "c3",
+    "heading": "Pattern",
+    "body": "Study the core pattern in chapter 3 and repeat aloud to improve retention.",
+    "orderIndex": 2
+  },
+  {
+    "id": "ls-c3-3",
+    "chapterId": "c3",
+    "heading": "Practice",
+    "body": "Read each sample twice, then write one new sentence using the chapter pattern.",
+    "orderIndex": 3
+  },
+  {
+    "id": "ls-c4-1",
+    "chapterId": "c4",
+    "heading": "Concept",
+    "body": "This lesson introduces nominal sentences with clear examples for beginners.",
+    "orderIndex": 1
+  },
+  {
+    "id": "ls-c4-2",
+    "chapterId": "c4",
+    "heading": "Pattern",
+    "body": "Study the core pattern in chapter 1 and repeat aloud to improve retention.",
+    "orderIndex": 2
+  },
+  {
+    "id": "ls-c4-3",
+    "chapterId": "c4",
+    "heading": "Practice",
+    "body": "Read each sample twice, then write one new sentence using the chapter pattern.",
+    "orderIndex": 3
+  },
+  {
+    "id": "ls-c5-1",
+    "chapterId": "c5",
+    "heading": "Concept",
+    "body": "This lesson introduces verb basics in daily context with clear examples for beginners.",
+    "orderIndex": 1
+  },
+  {
+    "id": "ls-c5-2",
+    "chapterId": "c5",
+    "heading": "Pattern",
+    "body": "Study the core pattern in chapter 2 and repeat aloud to improve retention.",
+    "orderIndex": 2
+  },
+  {
+    "id": "ls-c5-3",
+    "chapterId": "c5",
+    "heading": "Practice",
+    "body": "Read each sample twice, then write one new sentence using the chapter pattern.",
+    "orderIndex": 3
+  }
+]
