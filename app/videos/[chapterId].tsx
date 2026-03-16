@@ -1,6 +1,9 @@
-import { Linking, Text, View } from 'react-native';
+import { Linking, Text } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
+import { EmptyStateCard } from '../../src/components/EmptyStateCard';
 import { Screen } from '../../src/components/Screen';
+import { SectionCard } from '../../src/components/SectionCard';
+import { PrimaryButton } from '../../src/components/PrimaryButton';
 import { getVideosForChapter } from '../../src/features/videos/selectors';
 
 export default function VideosScreen() {
@@ -10,11 +13,17 @@ export default function VideosScreen() {
   return (
     <Screen>
       <Text style={{ fontSize: 24, fontWeight: '700' }}>Chapter videos</Text>
-      {videos.length === 0 ? <Text>No videos yet.</Text> : videos.map((video) => (
-        <View key={video.id} style={{ backgroundColor: '#fff', padding: 12, borderRadius: 8, gap: 6 }}>
-          <Text style={{ fontWeight: '700' }}>{video.title}</Text>
-          <Text style={{ color: '#2563EB' }} onPress={() => Linking.openURL(video.youtubeUrl)}>Open video</Text>
-        </View>
+      {videos.length === 0 ? (
+        <EmptyStateCard
+          title="No videos yet"
+          message="No supporting videos are linked for this chapter yet."
+          ctaLabel="Back to lesson"
+          ctaHref={`/chapters/${chapterId}` as const}
+        />
+      ) : videos.map((video) => (
+        <SectionCard key={video.id} title={video.title}>
+          <PrimaryButton label="Open video" onPress={() => Linking.openURL(video.youtubeUrl)} />
+        </SectionCard>
       ))}
     </Screen>
   );

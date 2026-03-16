@@ -1,7 +1,10 @@
 import { useFocusEffect } from 'expo-router';
 import { useCallback, useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
+import { EmptyStateCard } from '../../src/components/EmptyStateCard';
+import { LoadingCard } from '../../src/components/LoadingCard';
 import { Screen } from '../../src/components/Screen';
+import { SectionCard } from '../../src/components/SectionCard';
 import { PrimaryButton } from '../../src/components/PrimaryButton';
 import { addNote, deleteNote, listNotes, updateNote } from '../../src/db/repositories';
 
@@ -10,12 +13,19 @@ export default function NotesScreen() {
   const [chapterId, setChapterId] = useState('c1');
   const [body, setBody] = useState('');
   const [editingId, setEditingId] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const load = useCallback(async () => {
+    setIsLoading(true);
     setNotes(await listNotes());
+    setIsLoading(false);
   }, []);
 
-  useFocusEffect(load);
+  useFocusEffect(
+    useCallback(() => {
+      load();
+    }, [load]),
+  );
 
   return (
     <Screen>
@@ -34,15 +44,26 @@ export default function NotesScreen() {
         }}
       />
 
-      {notes.length === 0 ? <Text>No notes yet.</Text> : notes.map((note) => (
-        <View key={note.id} style={{ backgroundColor: '#fff', padding: 12, borderRadius: 8, gap: 6 }}>
-          <Text style={{ fontWeight: '700' }}>{note.chapterId}</Text>
+      {isLoading ? (
+        <>
+          <LoadingCard />
+          <LoadingCard />
+        </>
+      ) : notes.length === 0 ? (
+        <EmptyStateCard
+          title="No notes yet"
+          message="Capture vocabulary, grammar tips, and reflections as you learn."
+          ctaLabel="Open books"
+          ctaHref="/(tabs)/books"
+        />
+      ) : notes.map((note) => (
+        <SectionCard key={note.id} title={note.chapterId}>
           <Text>{note.body}</Text>
-          <View style={{ flexDirection: 'row', gap: 16 }}>
-            <Text onPress={() => { setBody(note.body); setEditingId(note.id); }}>Edit</Text>
-            <Text onPress={async () => { await deleteNote(note.id); load(); }}>Delete</Text>
+          <View style={{ flexDirection: 'row', gap: 8 }}>
+            <PrimaryButton label="Edit" onPress={() => { setBody(note.body); setEditingId(note.id); }} />
+            <PrimaryButton label="Delete" onPress={async () => { await deleteNote(note.id); load(); }} />
           </View>
-        </View>
+        </SectionCard>
       ))}
     </Screen>
   );

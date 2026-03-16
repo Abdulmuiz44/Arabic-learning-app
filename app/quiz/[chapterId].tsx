@@ -1,6 +1,7 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { Text, View } from 'react-native';
+import { EmptyStateCard } from '../../src/components/EmptyStateCard';
 import { Screen } from '../../src/components/Screen';
 import { PrimaryButton } from '../../src/components/PrimaryButton';
 import { setQuizBestScore, updateStreakForAction } from '../../src/db/repositories';
@@ -14,7 +15,18 @@ export default function QuizScreen() {
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<string | null>(null);
 
-  if (!quiz) return <Screen><Text>No quiz available.</Text></Screen>;
+  if (!quiz || questions.length === 0) {
+    return (
+      <Screen>
+        <EmptyStateCard
+          title="No quiz available"
+          message="This chapter doesn't include quiz questions yet."
+          ctaLabel="Review flashcards"
+          ctaHref={`/flashcards/${chapterId}` as const}
+        />
+      </Screen>
+    );
+  }
 
   const question = questions[index];
   const answer = async (option: 'A' | 'B' | 'C' | 'D') => {

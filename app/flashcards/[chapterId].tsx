@@ -1,6 +1,7 @@
 import { useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { Text, View } from 'react-native';
+import { EmptyStateCard } from '../../src/components/EmptyStateCard';
 import { Screen } from '../../src/components/Screen';
 import { PrimaryButton } from '../../src/components/PrimaryButton';
 import { setFlashcardStats, updateStreakForAction } from '../../src/db/repositories';
@@ -13,7 +14,18 @@ export default function FlashcardsScreen() {
   const [known, setKnown] = useState(0);
   const [needsReview, setNeedsReview] = useState(0);
 
-  if (cards.length === 0) return <Screen><Text>No flashcards for this chapter.</Text></Screen>;
+  if (cards.length === 0) {
+    return (
+      <Screen>
+        <EmptyStateCard
+          title="No flashcards yet"
+          message="This chapter has no flashcards available right now."
+          ctaLabel="Take chapter quiz"
+          ctaHref={`/quiz/${chapterId}` as const}
+        />
+      </Screen>
+    );
+  }
 
   const card = cards[index];
   const persist = async (k: number, n: number) => {
