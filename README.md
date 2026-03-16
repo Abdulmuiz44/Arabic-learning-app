@@ -66,6 +66,71 @@ npm run typecheck
 npm run lint
 ```
 
+## Content pipeline (authoring + validation)
+
+The app runtime reads canonical seed files from `src/data/*.json`.
+To make curriculum updates safe, author content in `content-source/` and use the content tooling to validate + generate deterministic runtime files.
+
+### Folder model
+
+- `content-source/` → editable source content for curriculum authors
+- `src/data/` → generated canonical runtime files consumed by the app
+- `src/content/` → shared schemas, normalization, and validation logic
+- `scripts/content/` → CLI tooling for build and validation
+
+### Commands
+
+Validate canonical runtime content:
+
+```bash
+npm run content:validate
+```
+
+Build canonical runtime files from `content-source/`:
+
+```bash
+npm run content:build
+```
+
+Both commands fail with a non-zero exit code on invalid content and print actionable errors with file names and record IDs.
+
+### Expected content files
+
+Place one JSON file per entity in both `content-source/` and `src/data/`:
+
+- `books.json`
+- `chapters.json`
+- `lesson_sections.json`
+- `flashcards.json`
+- `quizzes.json`
+- `questions.json`
+- `videos.json`
+
+### Key validation rules
+
+- duplicate IDs inside any file
+- invalid field types or missing required strings
+- chapters referencing missing books
+- lesson sections, flashcards, quizzes, and videos referencing missing chapters
+- questions referencing missing quizzes
+- invalid quiz `correctOption` (must be `A|B|C|D`)
+- duplicate `chapterNumber` inside a single book
+
+### Normalization performed during build
+
+- trims all string fields
+- collapses repeated whitespace
+- enforces deterministic sort order by parent + index/id
+- writes prettified canonical JSON with stable ordering
+
+### Common failure cases and fixes
+
+- **`Duplicate id`**: Rename one record ID to a unique stable value.
+- **`Missing parent chapter/book/quiz`**: Correct the foreign key (`bookId`, `chapterId`, `quizId`).
+- **`... cannot be empty`**: Fill in the required text field with non-empty content.
+- **`correctOption` invalid**: Use one of `A`, `B`, `C`, or `D`.
+- **`Duplicate chapterNumber`**: Ensure chapter numbers are unique within each book.
+
 ## Data and persistence
 
 - Seed content lives in `src/data/*.json`.
