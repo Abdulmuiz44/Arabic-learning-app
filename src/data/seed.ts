@@ -2,11 +2,12 @@ import books from './books.json';
 import chapters from './chapters.json';
 import lessonSections from './lesson_sections.json';
 import flashcards from './flashcards.json';
+import listeningItems from './listening_items.json';
 import quizzes from './quizzes.json';
 import questions from './questions.json';
 import videos from './videos.json';
 
-import { Book, Chapter, Flashcard, LessonSection, Question, Quiz, Video } from '../types/models';
+import { Book, Chapter, Flashcard, LessonSection, ListeningItem, Question, Quiz, Video } from '../types/models';
 
 type EntityWithId = { id: string };
 
@@ -27,6 +28,7 @@ function validateSeedShape() {
   assertSeedCollection('chapters', chapters);
   assertSeedCollection('lesson_sections', lessonSections);
   assertSeedCollection('flashcards', flashcards);
+  assertSeedCollection('listening_items', listeningItems);
   assertSeedCollection('quizzes', quizzes);
   assertSeedCollection('questions', questions);
   assertSeedCollection('videos', videos);
@@ -39,6 +41,7 @@ export const seed = {
   chapters: chapters as Chapter[],
   lessonSections: lessonSections as LessonSection[],
   flashcards: flashcards as Flashcard[],
+  listeningItems: listeningItems as ListeningItem[],
   quizzes: quizzes as Quiz[],
   questions: questions as Question[],
   videos: videos as Video[],

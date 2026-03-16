@@ -1,0 +1,98 @@
+[
+  {
+    "id": "l-c1-1",
+    "chapterId": "c1",
+    "promptText": "Listen and identify the word.",
+    "arabic": "كِتَاب",
+    "transliteration": "kitāb",
+    "translation": "book",
+    "audioUrl": "https://example.com/audio/l-c1-1.mp3",
+    "difficulty": "easy",
+    "orderIndex": 1
+  },
+  {
+    "id": "l-c1-2",
+    "chapterId": "c1",
+    "promptText": "Listen and match the greeting.",
+    "arabic": "السَّلَامُ عَلَيْكُمْ",
+    "transliteration": "as-salāmu ʿalaykum",
+    "translation": "Peace be upon you",
+    "localAudioKey": "l-c1-2",
+    "difficulty": "medium",
+    "orderIndex": 2
+  },
+  {
+    "id": "l-c1-3",
+    "chapterId": "c1",
+    "promptText": "Listen and understand the response.",
+    "arabic": "وَعَلَيْكُمُ السَّلَام",
+    "transliteration": "wa ʿalaykumu s-salām",
+    "translation": "And upon you be peace",
+    "difficulty": "medium",
+    "orderIndex": 3
+  },
+  {
+    "id": "l-c2-1",
+    "chapterId": "c2",
+    "promptText": "Listen and identify the word.",
+    "arabic": "كِتَاب",
+    "transliteration": "kitāb",
+    "translation": "book",
+    "audioUrl": "https://example.com/audio/l-c2-1.mp3",
+    "difficulty": "easy",
+    "orderIndex": 1
+  },
+  {
+    "id": "l-c2-2",
+    "chapterId": "c2",
+    "promptText": "Listen and match the greeting.",
+    "arabic": "السَّلَامُ عَلَيْكُمْ",
+    "transliteration": "as-salāmu ʿalaykum",
+    "translation": "Peace be upon you",
+    "localAudioKey": "l-c2-2",
+    "difficulty": "medium",
+    "orderIndex": 2
+  },
+  {
+    "id": "l-c2-3",
+    "chapterId": "c2",
+    "promptText": "Listen and understand the response.",
+    "arabic": "وَعَلَيْكُمُ السَّلَام",
+    "transliteration": "wa ʿalaykumu s-salām",
+    "translation": "And upon you be peace",
+    "difficulty": "medium",
+    "orderIndex": 3
+  },
+  {
+    "id": "l-c3-1",
+    "chapterId": "c3",
+    "promptText": "Listen and identify the word.",
+    "arabic": "كِتَاب",
+    "transliteration": "kitāb",
+    "translation": "book",
+    "audioUrl": "https://example.com/audio/l-c3-1.mp3",
+    "difficulty": "easy",
+    "orderIndex": 1
+  },
+  {
+    "id": "l-c3-2",
+    "chapterId": "c3",
+    "promptText": "Listen and match the greeting.",
+    "arabic": "السَّلَامُ عَلَيْكُمْ",
+    "transliteration": "as-salāmu ʿalaykum",
+    "translation": "Peace be upon you",
+    "localAudioKey": "l-c3-2",
+    "difficulty": "medium",
+    "orderIndex": 2
+  },
+  {
+    "id": "l-c3-3",
+    "chapterId": "c3",
+    "promptText": "Listen and understand the response.",
+    "arabic": "وَعَلَيْكُمُ السَّلَام",
+    "transliteration": "wa ʿalaykumu s-salām",
+    "translation": "And upon you be peace",
+    "difficulty": "medium",
+    "orderIndex": 3
+  }
+]

@@ -52,6 +52,14 @@ export const initDb = async () => {
       value TEXT NOT NULL
     );
 
+    CREATE TABLE IF NOT EXISTS listening_progress (
+      item_id TEXT PRIMARY KEY NOT NULL,
+      chapter_id TEXT NOT NULL,
+      completed INTEGER NOT NULL DEFAULT 0,
+      correct_count INTEGER NOT NULL DEFAULT 0,
+      last_attempted_at TEXT NOT NULL
+    );
+
     INSERT OR IGNORE INTO streak_meta (id, current_streak, longest_streak, last_study_date)
     VALUES (1, 0, 0, NULL);
 

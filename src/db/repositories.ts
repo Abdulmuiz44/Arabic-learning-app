@@ -1,5 +1,5 @@
 import { getDb } from './sqlite';
-import { NoteRow, ProgressRow, StreakMeta } from '../types/models';
+import { ListeningProgressRow, NoteRow, ProgressRow, StreakMeta } from '../types/models';
 import { getChapterById } from '../features/chapters/selectors';
 
 const todayIso = () => new Date().toISOString().slice(0, 10);
@@ -98,6 +98,60 @@ export const deleteNote = async (id: number) => {
   await db.runAsync(`DELETE FROM notes WHERE id=?`, id);
 };
 
+export const upsertListeningAttempt = async (params: { itemId: string; chapterId: string; wasCorrect: boolean }) => {
+  const db = await getDb();
+  const now = new Date().toISOString();
+  await db.runAsync(
+    `INSERT INTO listening_progress (item_id, chapter_id, completed, correct_count, last_attempted_at)
+     VALUES (?, ?, 1, ?, ?)
+     ON CONFLICT(item_id) DO UPDATE SET
+       chapter_id=excluded.chapter_id,
+       completed=1,
+       correct_count=listening_progress.correct_count + excluded.correct_count,
+       last_attempted_at=excluded.last_attempted_at`,
+    params.itemId,
+    params.chapterId,
+    params.wasCorrect ? 1 : 0,
+    now,
+  );
+
+  await db.runAsync(
+    `INSERT INTO app_settings (key, value) VALUES ('last_listening_session_at', ?)
+     ON CONFLICT(key) DO UPDATE SET value=excluded.value`,
+    now,
+  );
+};
+
+export const getListeningProgressForChapter = async (chapterId: string) => {
+  const db = await getDb();
+  const rows = await db.getAllAsync<any>(
+    `SELECT item_id, chapter_id, completed, correct_count, last_attempted_at
+     FROM listening_progress
+     WHERE chapter_id = ?
+     ORDER BY last_attempted_at DESC`,
+    chapterId,
+  );
+
+  return rows.reduce<Record<string, ListeningProgressRow>>((acc, row) => {
+    acc[row.item_id] = {
+      itemId: row.item_id,
+      chapterId: row.chapter_id,
+      completed: row.completed,
+      correctCount: row.correct_count,
+      lastAttemptedAt: row.last_attempted_at,
+    };
+    return acc;
+  }, {});
+};
+
+export const getListeningCompletedCount = async () => {
+  const db = await getDb();
+  const row = await db.getFirstAsync<{ count: number }>(
+    `SELECT COUNT(*) as count FROM listening_progress WHERE completed = 1`,
+  );
+  return row?.count ?? 0;
+};
+
 export const updateStreakForAction = async () => {
   const db = await getDb();
   const row = await db.getFirstAsync<any>(`SELECT * FROM streak_meta WHERE id=1`);
@@ -136,6 +190,8 @@ export const resetAllProgress = async () => {
     DELETE FROM progress;
     DELETE FROM notes;
     DELETE FROM bookmarks;
+    DELETE FROM listening_progress;
+    UPDATE app_settings SET value = '' WHERE key='last_listening_session_at';
     UPDATE streak_meta SET current_streak = 0, longest_streak = 0, last_study_date = NULL WHERE id=1;
   `);
 };

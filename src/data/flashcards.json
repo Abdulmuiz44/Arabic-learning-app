@@ -5,7 +5,8 @@
     "arabic": "كِتَاب",
     "transliteration": "kitāb",
     "meaning": "book",
-    "example": "هَذَا كِتَابٌ مُفِيدٌ."
+    "example": "هَذَا كِتَابٌ مُفِيدٌ.",
+    "audioUrl": "https://example.com/audio/f-c1-1.mp3"
   },
   {
     "id": "f-c1-2",
@@ -13,7 +14,8 @@
     "arabic": "بَيْت",
     "transliteration": "bayt",
     "meaning": "house",
-    "example": "بَيْتِي قَرِيبٌ مِنَ الْمَسْجِدِ."
+    "example": "بَيْتِي قَرِيبٌ مِنَ الْمَسْجِدِ.",
+    "localAudioKey": "f-c1-2"
   },
   {
     "id": "f-c1-3",
@@ -53,7 +55,8 @@
     "arabic": "كِتَاب",
     "transliteration": "kitāb",
     "meaning": "book",
-    "example": "هَذَا كِتَابٌ مُفِيدٌ."
+    "example": "هَذَا كِتَابٌ مُفِيدٌ.",
+    "audioUrl": "https://example.com/audio/f-c2-1.mp3"
   },
   {
     "id": "f-c2-2",
@@ -61,7 +64,8 @@
     "arabic": "بَيْت",
     "transliteration": "bayt",
     "meaning": "house",
-    "example": "بَيْتِي قَرِيبٌ مِنَ الْمَسْجِدِ."
+    "example": "بَيْتِي قَرِيبٌ مِنَ الْمَسْجِدِ.",
+    "localAudioKey": "f-c2-2"
   },
   {
     "id": "f-c2-3",
@@ -101,7 +105,8 @@
     "arabic": "كِتَاب",
     "transliteration": "kitāb",
     "meaning": "book",
-    "example": "هَذَا كِتَابٌ مُفِيدٌ."
+    "example": "هَذَا كِتَابٌ مُفِيدٌ.",
+    "audioUrl": "https://example.com/audio/f-c3-1.mp3"
   },
   {
     "id": "f-c3-2",
@@ -109,7 +114,8 @@
     "arabic": "بَيْت",
     "transliteration": "bayt",
     "meaning": "house",
-    "example": "بَيْتِي قَرِيبٌ مِنَ الْمَسْجِدِ."
+    "example": "بَيْتِي قَرِيبٌ مِنَ الْمَسْجِدِ.",
+    "localAudioKey": "f-c3-2"
   },
   {
     "id": "f-c3-3",

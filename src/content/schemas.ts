@@ -15,6 +15,8 @@ export type Chapter = {
   title: string;
   description: string;
   estimatedMinutes: number;
+  chapterAudioUrl?: string;
+  chapterLocalAudioKey?: string;
 };
 
 export type LessonSection = {
@@ -32,6 +34,21 @@ export type Flashcard = {
   transliteration: string;
   meaning: string;
   example: string;
+  audioUrl?: string;
+  localAudioKey?: string;
+};
+
+export type ListeningItem = {
+  id: string;
+  chapterId: string;
+  promptText: string;
+  arabic: string;
+  transliteration: string;
+  translation: string;
+  audioUrl?: string;
+  localAudioKey?: string;
+  difficulty: 'easy' | 'medium' | 'hard';
+  orderIndex: number;
 };
 
 export type Quiz = {
@@ -64,6 +81,7 @@ export type CanonicalContent = {
   chapters: Chapter[];
   lesson_sections: LessonSection[];
   flashcards: Flashcard[];
+  listening_items: ListeningItem[];
   quizzes: Quiz[];
   questions: Question[];
   videos: Video[];
@@ -74,6 +92,7 @@ export const CONTENT_KEYS = [
   'chapters',
   'lesson_sections',
   'flashcards',
+  'listening_items',
   'quizzes',
   'questions',
   'videos',

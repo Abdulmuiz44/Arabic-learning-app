@@ -15,6 +15,8 @@ export type Chapter = {
   title: string;
   description: string;
   estimatedMinutes: number;
+  chapterAudioUrl?: string;
+  chapterLocalAudioKey?: string;
 };
 
 export type LessonSection = {
@@ -32,6 +34,21 @@ export type Flashcard = {
   transliteration: string;
   meaning: string;
   example: string;
+  audioUrl?: string;
+  localAudioKey?: string;
+};
+
+export type ListeningItem = {
+  id: string;
+  chapterId: string;
+  promptText: string;
+  arabic: string;
+  transliteration: string;
+  translation: string;
+  audioUrl?: string;
+  localAudioKey?: string;
+  difficulty: 'easy' | 'medium' | 'hard';
+  orderIndex: number;
 };
 
 export type Quiz = {
@@ -79,6 +96,14 @@ export type StreakMeta = {
   currentStreak: number;
   longestStreak: number;
   lastStudyDate: string | null;
+};
+
+export type ListeningProgressRow = {
+  itemId: string;
+  chapterId: string;
+  completed: number;
+  correctCount: number;
+  lastAttemptedAt: string;
 };
 
 export type ThemeSetting = 'light' | 'dark' | 'system';
