@@ -7,13 +7,15 @@ import { setQuizBestScore, updateStreakForAction } from '../../src/db/repositori
 import { getQuestionsForQuiz, getQuizForChapter } from '../../src/features/quiz/selectors';
 
 export default function QuizScreen() {
-  const { chapterId } = useLocalSearchParams<{ chapterId: string }>();
-  const quiz = getQuizForChapter(chapterId);
+  const { chapterId: rawChapterId } = useLocalSearchParams<{ chapterId?: string | string[] }>();
+  const chapterId = typeof rawChapterId === 'string' ? rawChapterId : null;
+  const quiz = chapterId ? getQuizForChapter(chapterId) : null;
   const questions = useMemo(() => (quiz ? getQuestionsForQuiz(quiz.id) : []), [quiz]);
   const [index, setIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<string | null>(null);
 
+  if (!chapterId) return <Screen><Text>Invalid chapter route parameter.</Text></Screen>;
   if (!quiz) return <Screen><Text>No quiz available.</Text></Screen>;
 
   const question = questions[index];

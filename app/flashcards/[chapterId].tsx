@@ -7,12 +7,14 @@ import { setFlashcardStats, updateStreakForAction } from '../../src/db/repositor
 import { getFlashcardsForChapter } from '../../src/features/flashcards/selectors';
 
 export default function FlashcardsScreen() {
-  const { chapterId } = useLocalSearchParams<{ chapterId: string }>();
-  const cards = getFlashcardsForChapter(chapterId);
+  const { chapterId: rawChapterId } = useLocalSearchParams<{ chapterId?: string | string[] }>();
+  const chapterId = typeof rawChapterId === 'string' ? rawChapterId : null;
+  const cards = chapterId ? getFlashcardsForChapter(chapterId) : [];
   const [index, setIndex] = useState(0);
   const [known, setKnown] = useState(0);
   const [needsReview, setNeedsReview] = useState(0);
 
+  if (!chapterId) return <Screen><Text>Invalid chapter route parameter.</Text></Screen>;
   if (cards.length === 0) return <Screen><Text>No flashcards for this chapter.</Text></Screen>;
 
   const card = cards[index];

@@ -4,8 +4,11 @@ import { Screen } from '../../src/components/Screen';
 import { getVideosForChapter } from '../../src/features/videos/selectors';
 
 export default function VideosScreen() {
-  const { chapterId } = useLocalSearchParams<{ chapterId: string }>();
-  const videos = getVideosForChapter(chapterId);
+  const { chapterId: rawChapterId } = useLocalSearchParams<{ chapterId?: string | string[] }>();
+  const chapterId = typeof rawChapterId === 'string' ? rawChapterId : null;
+  const videos = chapterId ? getVideosForChapter(chapterId) : [];
+
+  if (!chapterId) return <Screen><Text>Invalid chapter route parameter.</Text></Screen>;
 
   return (
     <Screen>

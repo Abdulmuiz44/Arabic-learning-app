@@ -70,6 +70,11 @@ export const getLastOpenedChapterId = async () => {
   return row?.chapter_id ?? null;
 };
 
+export const deleteProgressForChapter = async (chapterId: string) => {
+  const db = await getDb();
+  await db.runAsync(`DELETE FROM progress WHERE chapter_id = ?`, chapterId);
+};
+
 export const listNotes = async (chapterId?: string) => {
   const db = await getDb();
   const rows = chapterId

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import { Screen } from '../../src/components/Screen';
 import { SectionCard } from '../../src/components/SectionCard';
-import { getLastOpenedChapterId, getProgressMap, getStreak } from '../../src/db/repositories';
+import { deleteProgressForChapter, getLastOpenedChapterId, getProgressMap, getStreak } from '../../src/db/repositories';
 import { getChapterById } from '../../src/features/chapters/selectors';
 
 export default function HomeScreen() {
@@ -14,9 +14,15 @@ export default function HomeScreen() {
   useEffect(() => {
     const load = async () => {
       const [streakMeta, progressMap, chapterId] = await Promise.all([getStreak(), getProgressMap(), getLastOpenedChapterId()]);
+      const validChapter = chapterId ? getChapterById(chapterId) : null;
+
+      if (chapterId && !validChapter) {
+        await deleteProgressForChapter(chapterId);
+      }
+
       setStreak(streakMeta.currentStreak);
       setCompletedCount(Object.values(progressMap).filter((p) => p.completed).length);
-      setLastChapterId(chapterId);
+      setLastChapterId(validChapter?.id ?? null);
     };
     load();
   }, []);
@@ -28,8 +34,15 @@ export default function HomeScreen() {
       <Text style={{ fontSize: 28, fontWeight: '800' }}>Assalāmu ʿalaykum 👋</Text>
       <Text style={{ color: '#64748B' }}>Current streak: {streak} days</Text>
 
-      <SectionCard title="Continue Learning" subtitle={chapter ? chapter.title : 'No lesson opened yet'}>
-        {chapter ? <Link href={`/chapters/${chapter.id}` as any}>Open last lesson</Link> : <Text>Start from Books.</Text>}
+      <SectionCard title="Continue Learning" subtitle={chapter ? chapter.title : 'No valid chapter found yet'}>
+        {chapter ? (
+          <Link href={`/chapters/${chapter.id}` as any}>Open last lesson</Link>
+        ) : (
+          <View style={{ gap: 8 }}>
+            <Text>Start learning by opening a book and selecting your first chapter.</Text>
+            <Link href="/(tabs)/books">Go to Books</Link>
+          </View>
+        )}
       </SectionCard>
 
       <SectionCard title="Quick Actions">

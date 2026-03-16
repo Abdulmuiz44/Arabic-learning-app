@@ -1,5 +1,5 @@
 import { Link, useFocusEffect, useLocalSearchParams } from 'expo-router';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Text, View } from 'react-native';
 import { Screen } from '../../src/components/Screen';
 import { completeChapter, touchChapter, updateStreakForAction } from '../../src/db/repositories';
@@ -7,17 +7,20 @@ import { getChapterById, getLessonSectionsForChapter } from '../../src/features/
 import { getFlashcardsForChapter } from '../../src/features/flashcards/selectors';
 
 export default function ChapterLessonScreen() {
-  const { chapterId } = useLocalSearchParams<{ chapterId: string }>();
+  const { chapterId: rawChapterId } = useLocalSearchParams<{ chapterId?: string | string[] }>();
+  const chapterId = useMemo(() => (typeof rawChapterId === 'string' ? rawChapterId : null), [rawChapterId]);
   const [done, setDone] = useState(false);
-  const chapter = getChapterById(chapterId);
-  const sections = getLessonSectionsForChapter(chapterId);
-  const vocab = getFlashcardsForChapter(chapterId).slice(0, 3);
+  const chapter = chapterId ? getChapterById(chapterId) : null;
+  const sections = chapterId ? getLessonSectionsForChapter(chapterId) : [];
+  const vocab = chapterId ? getFlashcardsForChapter(chapterId).slice(0, 3) : [];
 
   useFocusEffect(useCallback(() => {
+    if (!chapterId || !chapter) return;
     touchChapter(chapterId);
     updateStreakForAction();
-  }, [chapterId]));
+  }, [chapterId, chapter]));
 
+  if (!chapterId) return <Screen><Text>Invalid chapter route parameter.</Text></Screen>;
   if (!chapter) return <Screen><Text>Chapter not found.</Text></Screen>;
 
   return (
