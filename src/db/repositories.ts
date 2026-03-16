@@ -1,5 +1,6 @@
 import { getDb } from './sqlite';
 import { NoteRow, ProgressRow, StreakMeta } from '../types/models';
+import { getChapterById } from '../features/chapters/selectors';
 
 const todayIso = () => new Date().toISOString().slice(0, 10);
 
@@ -79,6 +80,10 @@ export const listNotes = async (chapterId?: string) => {
 };
 
 export const addNote = async (chapterId: string, body: string) => {
+  if (!getChapterById(chapterId)) {
+    throw new Error('Cannot add a note for a chapter that does not exist.');
+  }
+
   const db = await getDb();
   await db.runAsync(`INSERT INTO notes (chapter_id, body, updated_at) VALUES (?, ?, ?)`, chapterId, body, new Date().toISOString());
 };
