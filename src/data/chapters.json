@@ -1,0 +1,42 @@
+[
+  {
+    "id": "c1",
+    "bookId": "b1",
+    "chapterNumber": 1,
+    "title": "Arabic Letters and Sounds",
+    "description": "Recognize and pronounce key Arabic letters.",
+    "estimatedMinutes": 18
+  },
+  {
+    "id": "c2",
+    "bookId": "b1",
+    "chapterNumber": 2,
+    "title": "Short Vowels and Basic Words",
+    "description": "Read simple words with short vowels.",
+    "estimatedMinutes": 20
+  },
+  {
+    "id": "c3",
+    "bookId": "b1",
+    "chapterNumber": 3,
+    "title": "Useful Greetings",
+    "description": "Use beginner-level greetings and responses.",
+    "estimatedMinutes": 15
+  },
+  {
+    "id": "c4",
+    "bookId": "b2",
+    "chapterNumber": 1,
+    "title": "Nominal Sentences",
+    "description": "Understand simple subject-predicate structures.",
+    "estimatedMinutes": 22
+  },
+  {
+    "id": "c5",
+    "bookId": "b2",
+    "chapterNumber": 2,
+    "title": "Verb Basics in Daily Context",
+    "description": "Use simple past-tense verbs in context.",
+    "estimatedMinutes": 24
+  }
+]

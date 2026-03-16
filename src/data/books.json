@@ -1,0 +1,20 @@
+[
+  {
+    "id": "b1",
+    "slug": "foundations",
+    "title": "Foundations of Arabic",
+    "subtitle": "Script, sounds, and core phrases",
+    "description": "An introductory path for reading and basic communication.",
+    "coverColor": "#DBEAFE",
+    "sortOrder": 1
+  },
+  {
+    "id": "b2",
+    "slug": "grammar",
+    "title": "Everyday Grammar",
+    "subtitle": "Build sentence confidence",
+    "description": "A practical sequence for sentence patterns and applied usage.",
+    "coverColor": "#DCFCE7",
+    "sortOrder": 2
+  }
+]
