@@ -13,26 +13,37 @@ export default function QuizScreen() {
   const [index, setIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useState<'A' | 'B' | 'C' | 'D' | null>(null);
+  const [hasAnswered, setHasAnswered] = useState(false);
 
   if (!quiz) return <Screen><Text>No quiz available.</Text></Screen>;
+  if (questions.length === 0) return <Screen><Text>No questions available for this quiz.</Text></Screen>;
 
   const question = questions[index];
   const answer = async (option: 'A' | 'B' | 'C' | 'D') => {
+    if (hasAnswered) return;
+
+    setSelectedOption(option);
+    setHasAnswered(true);
+
     const correct = option === question.correctOption;
     if (correct) setScore((s) => s + 1);
     setFeedback(`${correct ? 'Correct' : 'Not quite'} — ${question.explanation}`);
   };
 
   const next = async () => {
+    if (!hasAnswered) return;
+
     if (index < questions.length - 1) {
       setIndex((p) => p + 1);
       setFeedback(null);
+      setSelectedOption(null);
+      setHasAnswered(false);
       return;
     }
-    const finalScore = feedback?.startsWith('Correct') ? score + 1 : score;
-    await setQuizBestScore(chapterId, finalScore);
+    await setQuizBestScore(chapterId, score);
     await updateStreakForAction();
-    router.replace({ pathname: '/quiz/result', params: { score: String(finalScore), total: String(questions.length), chapterId } });
+    router.replace({ pathname: '/quiz/result', params: { score: String(score), total: String(questions.length), chapterId } });
   };
 
   return (
@@ -44,8 +55,9 @@ export default function QuizScreen() {
         {(['A', 'B', 'C', 'D'] as const).map((opt) => (
           <PrimaryButton
             key={opt}
-            label={`${opt}. ${question[`option${opt}`]}`}
+            label={`${selectedOption === opt ? '✓ ' : ''}${opt}. ${question[`option${opt}`]}`}
             onPress={() => answer(opt)}
+            disabled={hasAnswered}
           />
         ))}
       </View>
