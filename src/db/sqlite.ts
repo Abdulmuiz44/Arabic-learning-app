@@ -2,6 +2,7 @@ import * as SQLite from 'expo-sqlite';
 import { ThemeSetting } from '../types/models';
 
 let db: SQLite.SQLiteDatabase | null = null;
+let initDbPromise: Promise<void> | null = null;
 
 export const getDb = async () => {
   if (!db) {
@@ -11,8 +12,13 @@ export const getDb = async () => {
 };
 
 export const initDb = async () => {
-  const database = await getDb();
-  await database.execAsync(`
+  if (initDbPromise) {
+    return initDbPromise;
+  }
+
+  initDbPromise = (async () => {
+    const database = await getDb();
+    await database.execAsync(`
     CREATE TABLE IF NOT EXISTS progress (
       chapter_id TEXT PRIMARY KEY NOT NULL,
       completed INTEGER DEFAULT 0,
@@ -52,6 +58,14 @@ export const initDb = async () => {
     INSERT OR IGNORE INTO app_settings (key, value) VALUES ('theme', 'system');
     INSERT OR IGNORE INTO app_settings (key, value) VALUES ('onboarding_done', '0');
   `);
+  })();
+
+  try {
+    await initDbPromise;
+  } catch (error) {
+    initDbPromise = null;
+    throw error;
+  }
 };
 
 export const setTheme = async (theme: ThemeSetting) => {
