@@ -1,6 +1,7 @@
-export const CONTENT_KEYS = ['books', 'chapters', 'lesson_sections', 'flashcards', 'quizzes', 'questions', 'videos'];
+export const CONTENT_KEYS = ['books', 'chapters', 'lesson_sections', 'flashcards', 'listening_items', 'quizzes', 'questions', 'videos'];
 
 const CORRECT_OPTIONS = new Set(['A', 'B', 'C', 'D']);
+const LISTENING_DIFFICULTIES = new Set(['easy', 'medium', 'hard']);
 
 const isNonEmptyString = (v) => typeof v === 'string' && v.trim().length > 0;
 const isPositiveInt = (v) => Number.isInteger(v) && v > 0;
@@ -20,6 +21,7 @@ export function normalizeContent(content) {
     chapters: content.chapters.map(normalizeEntity).sort((a, b) => a.bookId.localeCompare(b.bookId) || a.chapterNumber - b.chapterNumber || a.id.localeCompare(b.id)),
     lesson_sections: content.lesson_sections.map(normalizeEntity).sort((a, b) => a.chapterId.localeCompare(b.chapterId) || a.orderIndex - b.orderIndex || a.id.localeCompare(b.id)),
     flashcards: content.flashcards.map(normalizeEntity).sort((a, b) => a.chapterId.localeCompare(b.chapterId) || a.id.localeCompare(b.id)),
+    listening_items: content.listening_items.map(normalizeEntity).sort((a, b) => a.chapterId.localeCompare(b.chapterId) || a.orderIndex - b.orderIndex || a.id.localeCompare(b.id)),
     quizzes: content.quizzes.map(normalizeEntity).sort((a, b) => a.chapterId.localeCompare(b.chapterId) || a.id.localeCompare(b.id)),
     questions: content.questions.map(normalizeEntity).sort((a, b) => a.quizId.localeCompare(b.quizId) || a.id.localeCompare(b.id)),
     videos: content.videos.map(normalizeEntity).sort((a, b) => a.chapterId.localeCompare(b.chapterId) || a.id.localeCompare(b.id)),
@@ -45,15 +47,25 @@ const validUrl = (value) => {
   try { new URL(value); return true; } catch { return false; }
 };
 
+const validateOptionalAudio = (record, file, recordId, issues, urlField, keyField) => {
+  if (record[urlField] !== undefined && !validUrl(record[urlField])) {
+    issues.push({ file, recordId, message: `${urlField} must be a valid URL when provided` });
+  }
+  if (record[keyField] !== undefined && !isNonEmptyString(record[keyField])) {
+    issues.push({ file, recordId, message: `${keyField} must be a non-empty string when provided` });
+  }
+};
+
 export function validateContent(raw) {
   const issues = [];
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return { content: null, issues: [{ file: 'content', message: 'Content root must be an object' }] };
 
-  const canonical = {};
-  for (const key of CONTENT_KEYS) {
-    const arr = raw[key];
-    if (!Array.isArray(arr)) { issues.push({ file: `${key}.json`, message: 'Expected top-level array' }); canonical[key] = []; continue; }
-    canonical[key] = [];
+  const canonical = {
+    books: [], chapters: [], lesson_sections: [], flashcards: [], listening_items: [], quizzes: [], questions: [], videos: [],
+  };
+
+  for (const [file, key] of [['books.json', 'books'], ['chapters.json', 'chapters'], ['lesson_sections.json', 'lesson_sections'], ['flashcards.json', 'flashcards'], ['listening_items.json', 'listening_items'], ['quizzes.json', 'quizzes'], ['questions.json', 'questions'], ['videos.json', 'videos']]) {
+    if (!Array.isArray(raw[key])) issues.push({ file, message: 'Expected top-level array' });
   }
 
   for (const item of raw.books || []) {
@@ -71,6 +83,7 @@ export function validateContent(raw) {
     requireStrings(item,['id','bookId','title','description'],file,recordId,issues);
     if (!isPositiveInt(item.chapterNumber)) issues.push({file,recordId,message:'chapterNumber must be a positive integer'});
     if (!isPositiveInt(item.estimatedMinutes)) issues.push({file,recordId,message:'estimatedMinutes must be a positive integer'});
+    validateOptionalAudio(item, file, recordId, issues, 'chapterAudioUrl', 'chapterLocalAudioKey');
     if (isNonEmptyString(item.id)) canonical.chapters.push(item);
   }
 
@@ -86,7 +99,18 @@ export function validateContent(raw) {
     const file='flashcards.json'; if (!item || typeof item !== 'object' || Array.isArray(item)) { issues.push({file,message:'Each record must be an object'}); continue; }
     const recordId=typeof item.id==='string'?item.id:undefined;
     requireStrings(item,['id','chapterId','arabic','transliteration','meaning','example'],file,recordId,issues);
+    validateOptionalAudio(item, file, recordId, issues, 'audioUrl', 'localAudioKey');
     if (isNonEmptyString(item.id)) canonical.flashcards.push(item);
+  }
+
+  for (const item of raw.listening_items || []) {
+    const file='listening_items.json'; if (!item || typeof item !== 'object' || Array.isArray(item)) { issues.push({file,message:'Each record must be an object'}); continue; }
+    const recordId=typeof item.id==='string'?item.id:undefined;
+    requireStrings(item,['id','chapterId','promptText','arabic','transliteration','translation'],file,recordId,issues);
+    if (!isPositiveInt(item.orderIndex)) issues.push({file,recordId,message:'orderIndex must be a positive integer'});
+    if (!isNonEmptyString(item.difficulty) || !LISTENING_DIFFICULTIES.has(item.difficulty)) issues.push({file,recordId,message:'difficulty must be one of easy, medium, hard'});
+    validateOptionalAudio(item, file, recordId, issues, 'audioUrl', 'localAudioKey');
+    if (isNonEmptyString(item.id)) canonical.listening_items.push(item);
   }
 
   for (const item of raw.quizzes || []) {
@@ -117,6 +141,7 @@ export function validateContent(raw) {
   issues.push(...duplicateIssues(normalized.chapters,'chapters.json'));
   issues.push(...duplicateIssues(normalized.lesson_sections,'lesson_sections.json'));
   issues.push(...duplicateIssues(normalized.flashcards,'flashcards.json'));
+  issues.push(...duplicateIssues(normalized.listening_items,'listening_items.json'));
   issues.push(...duplicateIssues(normalized.quizzes,'quizzes.json'));
   issues.push(...duplicateIssues(normalized.questions,'questions.json'));
   issues.push(...duplicateIssues(normalized.videos,'videos.json'));
@@ -128,6 +153,7 @@ export function validateContent(raw) {
   for (const x of normalized.chapters) if (!bookIds.has(x.bookId)) issues.push({file:'chapters.json',recordId:x.id,message:`Missing parent book "${x.bookId}"`});
   for (const x of normalized.lesson_sections) if (!chapterIds.has(x.chapterId)) issues.push({file:'lesson_sections.json',recordId:x.id,message:`Missing parent chapter "${x.chapterId}"`});
   for (const x of normalized.flashcards) if (!chapterIds.has(x.chapterId)) issues.push({file:'flashcards.json',recordId:x.id,message:`Missing parent chapter "${x.chapterId}"`});
+  for (const x of normalized.listening_items) if (!chapterIds.has(x.chapterId)) issues.push({file:'listening_items.json',recordId:x.id,message:`Missing parent chapter "${x.chapterId}"`});
   for (const x of normalized.quizzes) if (!chapterIds.has(x.chapterId)) issues.push({file:'quizzes.json',recordId:x.id,message:`Missing parent chapter "${x.chapterId}"`});
   for (const x of normalized.questions) if (!quizIds.has(x.quizId)) issues.push({file:'questions.json',recordId:x.id,message:`Missing parent quiz "${x.quizId}"`});
   for (const x of normalized.videos) if (!chapterIds.has(x.chapterId)) issues.push({file:'videos.json',recordId:x.id,message:`Missing parent chapter "${x.chapterId}"`});

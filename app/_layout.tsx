@@ -43,6 +43,7 @@ export default function RootLayout() {
       <Stack.Screen name="quiz/[chapterId]" />
       <Stack.Screen name="quiz/result" />
       <Stack.Screen name="videos/[chapterId]" />
+      <Stack.Screen name="listening/[chapterId]" />
     </Stack>
   );
 }

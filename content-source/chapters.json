@@ -5,7 +5,8 @@
     "chapterNumber": 1,
     "title": "Arabic Letters and Sounds",
     "description": "Recognize and pronounce key Arabic letters.",
-    "estimatedMinutes": 18
+    "estimatedMinutes": 18,
+    "chapterAudioUrl": "https://example.com/audio/c1-chapter.mp3"
   },
   {
     "id": "c2",
@@ -13,7 +14,8 @@
     "chapterNumber": 2,
     "title": "Short Vowels and Basic Words",
     "description": "Read simple words with short vowels.",
-    "estimatedMinutes": 20
+    "estimatedMinutes": 20,
+    "chapterAudioUrl": "https://example.com/audio/c2-chapter.mp3"
   },
   {
     "id": "c3",
@@ -21,7 +23,8 @@
     "chapterNumber": 3,
     "title": "Useful Greetings",
     "description": "Use beginner-level greetings and responses.",
-    "estimatedMinutes": 15
+    "estimatedMinutes": 15,
+    "chapterAudioUrl": "https://example.com/audio/c3-chapter.mp3"
   },
   {
     "id": "c4",

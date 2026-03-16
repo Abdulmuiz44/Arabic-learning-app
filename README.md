@@ -105,13 +105,14 @@ Place one JSON file per entity in both `content-source/` and `src/data/`:
 - `quizzes.json`
 - `questions.json`
 - `videos.json`
+- `listening_items.json`
 
 ### Key validation rules
 
 - duplicate IDs inside any file
 - invalid field types or missing required strings
 - chapters referencing missing books
-- lesson sections, flashcards, quizzes, and videos referencing missing chapters
+- lesson sections, flashcards, listening items, quizzes, and videos referencing missing chapters
 - questions referencing missing quizzes
 - invalid quiz `correctOption` (must be `A|B|C|D`)
 - duplicate `chapterNumber` inside a single book
@@ -130,6 +131,47 @@ Place one JSON file per entity in both `content-source/` and `src/data/`:
 - **`... cannot be empty`**: Fill in the required text field with non-empty content.
 - **`correctOption` invalid**: Use one of `A`, `B`, `C`, or `D`.
 - **`Duplicate chapterNumber`**: Ensure chapter numbers are unique within each book.
+
+
+## Audio + listening MVP
+
+### Audio metadata fields
+
+Audio can be attached to chapters, flashcards, and listening items with either:
+
+- `audioUrl`: absolute URL to an audio file
+- `localAudioKey`: key looked up in `src/audio/audioRegistry.ts`
+
+Examples:
+
+- `chapters.json`: optional `chapterAudioUrl`, `chapterLocalAudioKey`
+- `flashcards.json`: optional `audioUrl`, `localAudioKey`
+- `listening_items.json`: `id`, `chapterId`, `promptText`, `arabic`, `transliteration`, `translation`, optional audio fields, `difficulty`, `orderIndex`
+
+### Where audio assets belong
+
+- Remote audio: host files and reference by `audioUrl`.
+- Local audio: register keys in `src/audio/audioRegistry.ts` and map them to bundled asset URIs.
+
+If audio is missing or not mapped, UI controls remain safe and show an unavailable/error state instead of crashing.
+
+### Listening progress persistence
+
+Listening attempts are stored in SQLite table `listening_progress` with:
+
+- `item_id`
+- `chapter_id`
+- `completed`
+- `correct_count`
+- `last_attempted_at`
+
+The app also stores `last_listening_session_at` in `app_settings`.
+
+### MVP limitations
+
+- No speech-to-text or pronunciation scoring.
+- No backend sync/auth for listening progress.
+- Local audio registry ships as a placeholder map and must be wired to real files for offline playback.
 
 ## Data and persistence
 

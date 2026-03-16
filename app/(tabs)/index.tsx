@@ -3,13 +3,14 @@ import { useCallback, useState } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { Screen } from '../../src/components/Screen';
 import { SectionCard } from '../../src/components/SectionCard';
-import { getLastOpenedChapterId, getProgressMap, getStreak } from '../../src/db/repositories';
+import { getLastOpenedChapterId, getListeningCompletedCount, getProgressMap, getStreak } from '../../src/db/repositories';
 import { getChapterById } from '../../src/features/chapters/selectors';
 
 export default function HomeScreen() {
   const [streak, setStreak] = useState(0);
   const [lastChapterId, setLastChapterId] = useState<string | null>(null);
   const [completedCount, setCompletedCount] = useState(0);
+  const [listeningCompletedCount, setListeningCompletedCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
 
@@ -18,9 +19,15 @@ export default function HomeScreen() {
     setLoadError(null);
 
     try {
-      const [streakMeta, progressMap, chapterId] = await Promise.all([getStreak(), getProgressMap(), getLastOpenedChapterId()]);
+      const [streakMeta, progressMap, chapterId, listeningCount] = await Promise.all([
+        getStreak(),
+        getProgressMap(),
+        getLastOpenedChapterId(),
+        getListeningCompletedCount(),
+      ]);
       setStreak(streakMeta.currentStreak);
       setCompletedCount(Object.values(progressMap).filter((p) => p.completed).length);
+      setListeningCompletedCount(listeningCount);
       setLastChapterId(chapterId);
     } catch {
       setLoadError('Could not refresh home data. Pull to refresh by revisiting this tab.');
@@ -63,6 +70,7 @@ export default function HomeScreen() {
       </SectionCard>
 
       <SectionCard title="Recent Progress" subtitle={`${completedCount} chapters completed`}>
+        <Text>Listening items completed: {listeningCompletedCount}</Text>
         <Text>Keep your daily consistency to grow your streak.</Text>
       </SectionCard>
     </Screen>
