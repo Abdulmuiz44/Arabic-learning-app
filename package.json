@@ -9,7 +9,9 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "lint": "expo lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "content:validate": "node scripts/content/validate.mjs",
+    "content:build": "node scripts/content/build.mjs"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
