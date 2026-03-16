@@ -1,6 +1,6 @@
-import { Link } from 'expo-router';
-import { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { Link, useFocusEffect } from 'expo-router';
+import { useCallback, useState } from 'react';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { Screen } from '../../src/components/Screen';
 import { SectionCard } from '../../src/components/SectionCard';
 import { getLastOpenedChapterId, getProgressMap, getStreak } from '../../src/db/repositories';
@@ -10,16 +10,30 @@ export default function HomeScreen() {
   const [streak, setStreak] = useState(0);
   const [lastChapterId, setLastChapterId] = useState<string | null>(null);
   const [completedCount, setCompletedCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const load = async () => {
+  const load = useCallback(async () => {
+    setIsLoading(true);
+    setLoadError(null);
+
+    try {
       const [streakMeta, progressMap, chapterId] = await Promise.all([getStreak(), getProgressMap(), getLastOpenedChapterId()]);
       setStreak(streakMeta.currentStreak);
       setCompletedCount(Object.values(progressMap).filter((p) => p.completed).length);
       setLastChapterId(chapterId);
-    };
-    load();
+    } catch {
+      setLoadError('Could not refresh home data. Pull to refresh by revisiting this tab.');
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      void load();
+    }, [load]),
+  );
 
   const chapter = lastChapterId ? getChapterById(lastChapterId) : null;
 
@@ -27,6 +41,13 @@ export default function HomeScreen() {
     <Screen>
       <Text style={{ fontSize: 28, fontWeight: '800' }}>Assalāmu ʿalaykum 👋</Text>
       <Text style={{ color: '#64748B' }}>Current streak: {streak} days</Text>
+      {isLoading ? (
+        <View style={{ marginTop: 8, flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+          <ActivityIndicator size="small" color="#64748B" />
+          <Text style={{ color: '#64748B' }}>Refreshing progress…</Text>
+        </View>
+      ) : null}
+      {loadError ? <Text style={{ marginTop: 8, color: '#DC2626' }}>{loadError}</Text> : null}
 
       <SectionCard title="Continue Learning" subtitle={chapter ? chapter.title : 'No lesson opened yet'}>
         {chapter ? <Link href={`/chapters/${chapter.id}` as any}>Open last lesson</Link> : <Text>Start from Books.</Text>}
