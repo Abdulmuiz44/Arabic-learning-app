@@ -1,7 +1,8 @@
 import { Link, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { useCallback, useState } from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Screen } from '../../src/components/Screen';
+import { sharedTypography } from '../../src/constants/typography';
 import { completeChapter, touchChapter, updateStreakForAction } from '../../src/db/repositories';
 import { getChapterById, getLessonSectionsForChapter } from '../../src/features/chapters/selectors';
 import { getFlashcardsForChapter } from '../../src/features/flashcards/selectors';
@@ -22,29 +23,46 @@ export default function ChapterLessonScreen() {
 
   return (
     <Screen>
-      <Text style={{ fontSize: 24, fontWeight: '700' }}>{chapter.title}</Text>
-      <Text>{chapter.description}</Text>
+      <Text style={styles.title}>{chapter.title}</Text>
+      <Text style={styles.description}>{chapter.description}</Text>
       {sections.map((section) => (
-        <View key={section.id} style={{ backgroundColor: '#fff', borderRadius: 8, padding: 12, gap: 4 }}>
-          <Text style={{ fontWeight: '700' }}>{section.heading}</Text>
-          <Text>{section.body}</Text>
+        <View key={section.id} style={styles.sectionCard}>
+          <Text style={styles.sectionHeading}>{section.heading}</Text>
+          <Text style={styles.description}>{section.body}</Text>
         </View>
       ))}
 
-      <View style={{ backgroundColor: '#fff', padding: 12, borderRadius: 8 }}>
-        <Text style={{ fontWeight: '700' }}>Vocabulary preview</Text>
-        {vocab.map((item) => <Text key={item.id} style={{ fontSize: 18 }}>{item.arabic} — {item.meaning}</Text>)}
+      <View style={styles.vocabularyCard}>
+        <Text style={styles.sectionHeading}>Vocabulary preview</Text>
+        {vocab.map((item) => (
+          <View key={item.id} style={styles.vocabularyRow}>
+            <Text style={[sharedTypography.arabicText, styles.previewArabic]}>{item.arabic}</Text>
+            <Text style={sharedTypography.englishText}>{item.meaning}</Text>
+          </View>
+        ))}
       </View>
 
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12 }}>
+      <View style={styles.linksRow}>
         <Link href={`/flashcards/${chapterId}` as any}>Flashcards</Link>
         <Link href={`/quiz/${chapterId}` as any}>Quiz</Link>
         <Link href={`/videos/${chapterId}` as any}>Videos</Link>
         <Link href="/(tabs)/notes">Notes</Link>
       </View>
 
-      <Text onPress={async () => { await completeChapter(chapterId); setDone(true); }} style={{ color: '#2563EB' }}>Mark chapter complete</Text>
+      <Text onPress={async () => { await completeChapter(chapterId); setDone(true); }} style={styles.completeLink}>Mark chapter complete</Text>
       {done ? <Text>Chapter marked complete.</Text> : null}
     </Screen>
   );
 }
+
+const styles = StyleSheet.create({
+  title: { fontSize: 24, fontWeight: '700' },
+  description: { lineHeight: 22 },
+  sectionCard: { backgroundColor: '#fff', borderRadius: 8, padding: 12, gap: 4 },
+  sectionHeading: { fontWeight: '700' },
+  vocabularyCard: { backgroundColor: '#fff', padding: 12, borderRadius: 8, gap: 4 },
+  vocabularyRow: { marginVertical: 6 },
+  previewArabic: { fontSize: 24, lineHeight: 36, marginBottom: 2 },
+  linksRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
+  completeLink: { color: '#2563EB' },
+});
