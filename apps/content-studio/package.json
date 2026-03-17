@@ -1,0 +1,17 @@
+{
+  "name": "@awwal/content-studio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "validate:content": "npm run build --silent && node dist/cli.js validate",
+    "export:content": "npm run build --silent && node dist/cli.js export",
+    "content:summary": "npm run build --silent && node dist/cli.js summary"
+  }
+}
